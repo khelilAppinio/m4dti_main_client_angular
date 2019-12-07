@@ -11,7 +11,7 @@
     height: 300px;
 		mat-card-content {
 			position: relative;
-			height: 90%;
+			height: 80%;
 			display: flex;
 			justify-content: center;
 			.mat-form-field {
@@ -37,6 +37,7 @@
 		}
 		mat-card-title{
 			position: relative;
+			margin-bottom: 30px;
 			mat-slide-toggle{
 				position: absolute;
 				right: 0;
