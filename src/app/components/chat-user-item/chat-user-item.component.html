@@ -1,0 +1,11 @@
+<div class="main-container">
+	<div class="user-avatar">
+		<img [src]="user.avatar">
+		<span class="status" [ngStyle]="{'background-color': user.status == 'online' ? 'green' : 'gray'}"></span>
+	</div>
+	<div class="username">
+		<span>{{user.username}}</span>
+	</div>
+	<div class="user-menu">
+	</div>
+</div>
