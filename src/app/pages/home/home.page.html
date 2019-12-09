@@ -7,6 +7,6 @@
 		<m4dti-chat-user-item *ngFor="let user of users" [user]="user"></m4dti-chat-user-item>
 	</div>
 	<div class="mssg-container">
-		<m4dti-chat-message *ngFor="let item of [1,2,3,4,5,6]"></m4dti-chat-message>
+		<m4dti-chat-message *ngFor="let message of messages" [message]="message"></m4dti-chat-message>
 	</div>
 </div>

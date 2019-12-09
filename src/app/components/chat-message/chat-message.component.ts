@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 
 @Component({
 	selector: 'm4dti-chat-message',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatMessageComponent implements OnInit {
 
+	@Input('message') message: ElementRef;
 	constructor() { }
 
 	ngOnInit() {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
+import { Message } from '../../models/message.model';
 
 @Component({
 	selector: 'm4dti-home',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomePage implements OnInit {
 
 
-	users = [
+	users: User[] = [
 		{
 			avatar: '../../../assets/home-bckgrnd.jpg',
 			username: 'john-zoubir',
@@ -23,6 +25,13 @@ export class HomePage implements OnInit {
 			avatar: '../../../assets/home-bckgrnd.jpg',
 			username: 'john-rachid',
 			status: 'online',
+		}
+	];
+
+	messages: Message[] = [
+		{
+			body: 'lkwmed wedherf ergihiusdf sdfijn',
+			date: '22/02/2019'
 		}
 	];
 	fillerNav = Array.from({ length: 5 }, (_, i) => `Nav Item ${i + 1}`);
