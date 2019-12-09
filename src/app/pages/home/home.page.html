@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+	<!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button> -->
+	<h1 class="app-name">Admin chat App</h1>
+</mat-toolbar>
+<div class="main-container">
+	<div class="users-list-container">
+		<m4dti-chat-user-item *ngFor="let user of users" [user]="user"></m4dti-chat-user-item>
+	</div>
+	<div class="mssg-container">
+		<m4dti-chat-message *ngFor="let item of [1,2,3,4,5,6]"></m4dti-chat-message>
+	</div>
+</div>

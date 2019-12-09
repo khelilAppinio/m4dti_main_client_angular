@@ -1,0 +1,19 @@
+
+:host {
+	h1.app-name {
+		margin-left: 8px;
+	}
+	.main-container {
+		display: flex;
+		height: 90%;
+		.users-list-container {
+			width: 20%;
+			padding: 20px;
+			background-color: #8080803d;
+    	border-right: 1px solid #b3b3b3;
+		}
+		.mssg-container {
+			width: 80%;
+		}
+	}
+}
