@@ -1,8 +1,10 @@
-<div class="main-container">
-	<div class="message-body">
-		{{message.body}}
-	</div>
-	<div class="message-date">
-		{{message.date}}
+<div class="main-container" [ngClass]="{'owner': message.owner}">
+	<div class="content">
+		<div class="message-body">
+			{{message.body}}
+		</div>
+		<div class="message-date">
+			{{message.date}}
+		</div>
 	</div>
 </div>
