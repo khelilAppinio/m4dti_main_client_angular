@@ -1,2 +1,6 @@
-<textarea name="toSendMessage" [(ngModel)]="toSendMessage"></textarea>
-<button (click)="sendingMessage()">Send</button>
+<form>
+	<mat-form-field>
+		<input matInput placeholder="Send message" name="toSendMessage" [(ngModel)]="toSendMessage">
+	</mat-form-field>
+	<button mat-button (click)="sendingMessage()" color="primary">Send</button>
+</form>
