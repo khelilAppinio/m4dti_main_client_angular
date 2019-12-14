@@ -16,5 +16,6 @@ export class ChatSendFieldComponent implements OnInit {
 
 	sendingMessage() {
 		this.sendMessageEvent.emit(this.toSendMessage);
+		this.toSendMessage = '';
 	}
 }
