@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomePage } from './home.page';
+import { HomePageComponent } from './home.page';
 import { Routes, RouterModule } from '@angular/router';
 import { MatSidenavModule, MatIconModule, MatToolbarModule, MatListModule, MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { ChatUserItemComponent } from '../../components/chat-user-item/chat-user-item.component';
@@ -11,12 +11,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
 	{
 		path: '',
-		component: HomePage
+		component: HomePageComponent
 	}
 ];
 
 @NgModule({
-	declarations: [HomePage, ChatUserItemComponent, ChatMessageComponent, ChatSendFieldComponent],
+	declarations: [HomePageComponent, ChatUserItemComponent, ChatMessageComponent, ChatSendFieldComponent],
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),

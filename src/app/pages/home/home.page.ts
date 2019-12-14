@@ -7,7 +7,7 @@ import { Message } from '../../models/message.model';
 	templateUrl: './home.page.html',
 	styleUrls: ['./home.page.scss']
 })
-export class HomePage implements OnInit {
+export class HomePageComponent implements OnInit {
 
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
 	users: User[] = [
@@ -81,6 +81,7 @@ export class HomePage implements OnInit {
 		});
 		this.scrollMessagesContainerToBottom();
 	}
+
 	scrollMessagesContainerToBottom() {
 		try {
 			console.log(this.mssgContainer);
