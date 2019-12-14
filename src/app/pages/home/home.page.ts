@@ -12,18 +12,18 @@ export class HomePage implements OnInit {
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
 	users: User[] = [
 		{
-			avatar: '../../../assets/home-bckgrnd.jpg',
-			username: 'john-zoubir',
+			avatar: 'https://picsum.photos/200/300?random=1',
+			username: 'john',
 			status: 'offline',
 		},
 		{
-			avatar: '../../../assets/home-bckgrnd.jpg',
-			username: 'john-makhlouf',
+			avatar: 'https://picsum.photos/200/300?random=2',
+			username: 'erik',
 			status: 'online',
 		},
 		{
-			avatar: '../../../assets/home-bckgrnd.jpg',
-			username: 'john-rachid',
+			avatar: 'https://picsum.photos/200/300?random=3',
+			username: 'mark',
 			status: 'online',
 		}
 	];
@@ -79,8 +79,22 @@ export class HomePage implements OnInit {
 			body: mssg,
 			date: '15/13/02'
 		});
-		this.mssgContainer.nativeElement.scrollTop = 500;
-		console.log('scrollTop', this.mssgContainer.nativeElement.scrollTop);
-		console.log('scrollBottom', this.mssgContainer.nativeElement.scrollBottom);
+		this.scrollMessagesContainerToBottom();
+	}
+	scrollMessagesContainerToBottom() {
+		try {
+			console.log(this.mssgContainer);
+			this.mssgContainer.nativeElement.onscroll( (event) => {
+				console.log(event);
+			});
+			// this.mssgContainer.nativeElement.scrollTop = this.mssgContainer.nativeElement.scrollHeight;
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	scrl($event) {
+		console.log($event);
+		
 	}
 }

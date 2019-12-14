@@ -6,17 +6,22 @@
 	.main-container {
 		display: flex;
 		height: 90%;
+		.messaging-wrapper {
+			width: 80%;
+			.mssg-container {
+				padding: 30px;
+				position: relative;
+				overflow-y: scroll;
+				display: flex;
+				flex-direction: column;
+				height: 80%;
+			}
+		}
 		.users-list-container {
 			width: 20%;
 			padding: 20px;
 			background-color: #8080803d;
     	border-right: 1px solid #b3b3b3;
-		}
-		.mssg-container {
-			width: 80%;
-			padding: 30px;
-			position: relative;
-			overflow-y: scroll;
 		}
 	}
 }
