@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../models/user.model';
 import { Message } from '../../models/message.model';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
 	selector: 'm4dti-home',
@@ -67,19 +68,23 @@ export class HomePageComponent implements OnInit {
 	];
 	fillerNav = Array.from({ length: 5 }, (_, i) => `Nav Item ${i + 1}`);
 
-	constructor() { }
+	constructor(private socket: Socket) { }
 
 	ngOnInit(): void {
-
+		this.socket.on('messageFromServerToMainClient', (response) => {
+			console.log(response);
+		});
 	}
 
-	onOwnerSendMessage(mssg) {
+	onOwnerSendMessage(mssg: string) {
 		this.messages.push({
 			owner: true,
 			body: mssg,
 			date: '15/13/02'
 		});
 		this.scrollMessagesContainerToBottom();
+		// emit message
+		this.socket.emit('messageFromMainClientToServer', mssg);
 	}
 
 	scrollMessagesContainerToBottom() {
