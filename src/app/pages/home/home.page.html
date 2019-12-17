@@ -4,7 +4,7 @@
 </mat-toolbar>
 <div class="main-container">
 	<div class="users-list-container">
-		<m4dti-chat-user-item *ngFor="let user of users" [user]="user"></m4dti-chat-user-item>
+		<m4dti-chat-user-item *ngFor="let user of users" [user]="user" (click)="focusOnUser(user)"></m4dti-chat-user-item>
 	</div>
 	<div class="messaging-wrapper">
 		<div class="mssg-container" #mssgContainer (scroll)="scrl($event)" #mssgContainer>

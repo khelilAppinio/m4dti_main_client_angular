@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" [ngStyle]="{'background-color': user.focused ? 'gray' : 'inherit'}">
 	<div class="user-avatar">
 		<img [src]="user.avatar">
 		<span class="status" [ngStyle]="{'background-color': user.status == 'online' ? 'green' : 'gray'}"></span>

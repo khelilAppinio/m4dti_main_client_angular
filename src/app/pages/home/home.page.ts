@@ -12,7 +12,6 @@ export class HomePageComponent implements OnInit {
 
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
 	users: User[] = [];
-
 	messages: Message[] = [
 		{
 			admin: false,
@@ -50,9 +49,7 @@ export class HomePageComponent implements OnInit {
 			date: '22/02/2019'
 		}
 	];
-	fillerNav = Array.from({ length: 5 }, (_, i) => `Nav Item ${i + 1}`);
-	onlineUsers: string[];
-
+	focusedUser: User;
 	constructor(private socket: Socket) { }
 
 	ngOnInit(): void {
@@ -61,7 +58,7 @@ export class HomePageComponent implements OnInit {
 			connectedClients: string[]
 		}) => {
 			this.users = data.connectedClients.map(username => new User(username));
-			});
+		});
 	}
 
 	onAdminSendMessage(mssg: string) {
@@ -91,5 +88,12 @@ export class HomePageComponent implements OnInit {
 	scrl($event) {
 		console.log($event);
 
+	}
+
+	focusOnUser(user: User) {
+		this.focusedUser && (this.focusedUser.focused = false);
+		user.focused = true;
+		this.focusedUser = user;
+		
 	}
 }
