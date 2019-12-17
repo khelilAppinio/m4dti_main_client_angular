@@ -11,23 +11,7 @@ import { Socket } from 'ngx-socket-io';
 export class HomePageComponent implements OnInit {
 
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
-	users: User[] = [
-		{
-			avatar: 'https://picsum.photos/200/300?random=1',
-			username: 'john',
-			status: 'offline',
-		},
-		{
-			avatar: 'https://picsum.photos/200/300?random=2',
-			username: 'erik',
-			status: 'online',
-		},
-		{
-			avatar: 'https://picsum.photos/200/300?random=3',
-			username: 'mark',
-			status: 'online',
-		}
-	];
+	users: User[] = [];
 
 	messages: Message[] = [
 		{
@@ -67,13 +51,17 @@ export class HomePageComponent implements OnInit {
 		}
 	];
 	fillerNav = Array.from({ length: 5 }, (_, i) => `Nav Item ${i + 1}`);
+	onlineUsers: string[];
 
 	constructor(private socket: Socket) { }
 
 	ngOnInit(): void {
-		this.socket.on('messageFromServerToMainClient', (response) => {
-			console.log(response);
-		});
+		this.socket.emit('messageInitFromMainClient', 'init'); // ! TODO: error handling
+		this.socket.on('online_clients', (data: {
+			connectedClients: string[]
+		}) => {
+			this.users = data.connectedClients.map(username => new User(username));
+			});
 	}
 
 	onOwnerSendMessage(mssg: string) {
@@ -84,13 +72,14 @@ export class HomePageComponent implements OnInit {
 		});
 		this.scrollMessagesContainerToBottom();
 		// emit message
-		this.socket.emit('messageFromMainClientToServer', mssg);
+		this.socket.emit('messageFromMainClientToServer', { to: 'i_q0kmO1WQr5K9v0AAAA', body: mssg });
+
 	}
 
 	scrollMessagesContainerToBottom() {
 		try {
 			console.log(this.mssgContainer);
-			this.mssgContainer.nativeElement.onscroll( (event) => {
+			this.mssgContainer.nativeElement.onscroll((event) => {
 				console.log(event);
 			});
 			// this.mssgContainer.nativeElement.scrollTop = this.mssgContainer.nativeElement.scrollHeight;
@@ -101,6 +90,6 @@ export class HomePageComponent implements OnInit {
 
 	scrl($event) {
 		console.log($event);
-		
+
 	}
 }
