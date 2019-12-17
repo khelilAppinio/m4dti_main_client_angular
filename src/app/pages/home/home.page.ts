@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../../models/user.model';
 import { Message } from '../../models/message.model';
 import { Socket } from 'ngx-socket-io';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
 	selector: 'm4dti-home',
@@ -12,45 +13,9 @@ export class HomePageComponent implements OnInit {
 
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
 	users: User[] = [];
-	messages: Message[] = [
-		{
-			admin: false,
-			body: 'sit iste cupiditate commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, reprehenderit necessitatibus omnis expedita aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: false,
-			body: '. Molestias minima dolore, sit iste cupiditate commodi dicta? Placeat nesciuntnderit necessitatibus omnis expedita aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: false,
-			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: true,
-			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: false,
-			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: true,
-			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
-		},
-		{
-			admin: true,
-			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
-		}
-	];
+	messages: Message[] = [];
 	focusedUser: User;
-	constructor(private socket: Socket) { }
+	constructor(private socket: Socket, private messagesService: MessagesService) { }
 
 	ngOnInit(): void {
 		this.socket.emit('messageInitFromMainClient', 'init'); // ! TODO: error handling
@@ -94,6 +59,9 @@ export class HomePageComponent implements OnInit {
 		this.focusedUser && (this.focusedUser.focused = false);
 		user.focused = true;
 		this.focusedUser = user;
-		
+
+		this.messagesService.getMessagesByUserId(user.id).subscribe( (messages: Message[]) => {
+			this.messages = messages;
+		})
 	}
 }
