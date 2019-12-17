@@ -15,37 +15,37 @@ export class HomePageComponent implements OnInit {
 
 	messages: Message[] = [
 		{
-			owner: false,
+			admin: false,
 			body: 'sit iste cupiditate commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, reprehenderit necessitatibus omnis expedita aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: false,
+			admin: false,
 			body: '. Molestias minima dolore, sit iste cupiditate commodi dicta? Placeat nesciuntnderit necessitatibus omnis expedita aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: false,
+			admin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: true,
+			admin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: false,
+			admin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: true,
+			admin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			owner: true,
+			admin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		}
@@ -64,9 +64,9 @@ export class HomePageComponent implements OnInit {
 			});
 	}
 
-	onOwnerSendMessage(mssg: string) {
+	onAdminSendMessage(mssg: string) {
 		this.messages.push({
-			owner: true,
+			admin: true,
 			body: mssg,
 			date: '15/13/02'
 		});
