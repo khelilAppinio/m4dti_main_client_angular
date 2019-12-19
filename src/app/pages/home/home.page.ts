@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { User } from '../../models/user.model';
+import { UserView } from '../../models/user.model';
 import { Message } from '../../models/message.model';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from '../../services/messages.service';
@@ -12,17 +12,27 @@ import { MessagesService } from '../../services/messages.service';
 export class HomePageComponent implements OnInit {
 
 	@ViewChild('mssgContainer', { static: false }) mssgContainer: ElementRef;
-	users: User[] = [];
+	users: UserView[] = [];
 	messages: Message[] = [];
-	focusedUser: User;
+	focusedUser: UserView;
 	constructor(private socket: Socket, private messagesService: MessagesService) { }
 
 	ngOnInit(): void {
 		this.socket.emit('messageInitFromMainClient', 'init'); // ! TODO: error handling
 		this.socket.on('online_clients', (data: {
-			connectedClients: string[]
+			connectedClients: { username: string, sourceSocketId: string }[]
 		}) => {
-			this.users = data.connectedClients.map(username => new User(username));
+			// ! TODO: should give messages history not always empty array
+			this.users = data.connectedClients.map(user => new UserView(user.username, user.sourceSocketId, []));
+		});
+		this.socket.on('messageFromClientToMainClient', (message: any) => { // ! TODO: specify message type
+			const target = this.users.find( user => user.getSourceSocketId() === message.sourceSocketId);
+			if (target) {
+				target.pushMessage(new Message(message.body, message.date, false, message.sourceSocketId));
+			} else {
+				// ! TODO: error handling
+				throw new Error('something went wrong');
+			}
 		});
 	}
 
@@ -30,11 +40,16 @@ export class HomePageComponent implements OnInit {
 		this.messages.push({
 			admin: true,
 			body: mssg,
-			date: '15/13/02'
+			date: new Date().toDateString()
 		});
-		this.scrollMessagesContainerToBottom();
+		// TODO: this.scrollMessagesContainerToBottom();
 		// emit message
-		this.socket.emit('messageFromMainClientToServer', { to: 'i_q0kmO1WQr5K9v0AAAA', body: mssg });
+		this.socket.emit('messageFromMainClientToServer', {
+			userSourceSocketId: this.focusedUser.getSourceSocketId(),
+			userId: this.focusedUser.getId(),
+			username: this.focusedUser.getUsername(),
+			body: mssg
+		});
 
 	}
 
@@ -50,18 +65,15 @@ export class HomePageComponent implements OnInit {
 		}
 	}
 
-	scrl($event) {
-		console.log($event);
-
-	}
-
-	focusOnUser(user: User) {
-		this.focusedUser && (this.focusedUser.focused = false);
-		user.focused = true;
+	focusOnUser(user: UserView) {
+		this.focusedUser && (this.focusedUser.setFocused(false));
 		this.focusedUser = user;
+		this.focusedUser.setFocused(true);
+		this.messages = this.focusedUser.getMessages();
+		// ! TODO: get messages from an api
+		// this.messagesService.getMessagesByUserId(user.id).subscribe( (messages: Message[]) => {
+		// 	this.messages = messages;
+		// });
 
-		this.messagesService.getMessagesByUserId(user.id).subscribe( (messages: Message[]) => {
-			this.messages = messages;
-		})
 	}
 }
