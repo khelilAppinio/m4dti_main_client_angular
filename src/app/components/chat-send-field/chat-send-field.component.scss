@@ -1,9 +1,10 @@
 :host {
-	width: 90%;
+	width: 100%;
 	display: block;
 	form {
 		width: 100%;
 		padding: 15px;
+		box-sizing: border-box;
 		mat-form-field {
 			width: 75%;
 		}
