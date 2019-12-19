@@ -5,23 +5,31 @@
 	}
 	.main-container {
 		display: flex;
-		height: 90%;
+		height: calc(100% - 64px);
 		.messaging-wrapper {
-			width: 80%;
+			width: 70%;
 			.mssg-container {
 				padding: 30px;
 				position: relative;
 				overflow-y: scroll;
 				display: flex;
 				flex-direction: column;
-				height: 80%;
+				height: calc(100% - 95px);
+    		box-sizing: border-box;
 			}
 		}
 		.users-list-container {
-			width: 20%;
-			padding: 20px;
+			width: 30%;
 			background-color: #8080803d;
     	border-right: 1px solid #b3b3b3;
 		}
+	}
+	.communication-error-container {
+		display: flex;
+    height: calc(100% - 64px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: gray;
 	}
 }
