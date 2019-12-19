@@ -23,10 +23,19 @@ export class HomePageComponent implements OnInit {
 			connectedClients: { username: string, sourceSocketId: string }[]
 		}) => {
 			// ! TODO: should give messages history not always empty array
-			this.users = data.connectedClients.map(user => new UserView(user.username, user.sourceSocketId, []));
+			data.connectedClients.forEach(userFromServer => {
+				if (!this.users.find(user => user.getSourceSocketId() === userFromServer.sourceSocketId)) {
+					this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, []));
+				}
+			});
+
+			if (data.connectedClients.length !== this.users.length) {
+				// removing garbage users (no more connected)
+				this.users = this.users.filter(user => data.connectedClients.find(userFromServer => userFromServer.sourceSocketId === user.getSourceSocketId()));
+			}
 		});
 		this.socket.on('messageFromClientToMainClient', (message: any) => { // ! TODO: specify message type
-			const target = this.users.find( user => user.getSourceSocketId() === message.sourceSocketId);
+			const target = this.users.find(user => user.getSourceSocketId() === message.sourceSocketId);
 			if (target) {
 				target.pushMessage(new Message(message.body, message.date, false, message.sourceSocketId));
 			} else {
