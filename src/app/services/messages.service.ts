@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../models/message.model';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
 	providedIn: 'root'
@@ -44,11 +45,15 @@ export class MessagesService {
 			date: '22/02/2019'
 		}
 	];
-	constructor() { }
+	constructor(private http: HttpClient) { }
 
-	getMessagesByUserId(id: string): Observable<Message[]> {
+	getMockedMessagesByUserId(id: string): Observable<Message[]> {
 		return new Observable(subscriber => { //! TODO: remove mocked messages list
 			subscriber.next(this.messages.slice(Math.floor(Math.random() * Math.floor(this.messages.length - 1))));
 		});
+	}
+	getMessagesByUserId(id: string, isAdmin?: boolean) {
+		const isAdminQuery = (typeof isAdmin === 'undefined') ? '' : `?isAdmin=${isAdmin}`;
+		return this.http.get(`http://localhost:3000/messages/${id}/${isAdminQuery}`);
 	}
 }

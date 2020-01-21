@@ -80,9 +80,10 @@ export class HomePageComponent implements OnInit {
 		this.focusedUser.setFocused(true);
 		this.messages = this.focusedUser.getMessages();
 		// ! TODO: get messages from an api
-		// this.messagesService.getMessagesByUserId(user.id).subscribe( (messages: Message[]) => {
-		// 	this.messages = messages;
-		// });
+		this.messagesService.getMessagesByUserId(user.getUsername()).subscribe( (messages: Message[]) => {
+			console.log(messages);
+			this.messages = messages;
+		});
 
 	}
 }
