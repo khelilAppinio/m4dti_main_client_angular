@@ -11,7 +11,7 @@
 		<ng-container *ngIf="focusedUser">
 
 			<div class="messaging-wrapper">
-				<div class="mssg-container" #mssgContainer #mssgContainer>
+				<div class="mssg-container" #mssgContainer>
 					<m4dti-chat-message *ngFor="let message of messages" [message]="message"></m4dti-chat-message>
 				</div>
 				<m4dti-chat-send-field (sendMessageEvent)="onAdminSendMessage($event)"></m4dti-chat-send-field>
