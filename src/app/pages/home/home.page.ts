@@ -25,7 +25,9 @@ export class HomePageComponent implements OnInit {
 			// ! TODO: should give messages history not always empty array
 			data.connectedClients.forEach(userFromServer => {
 				if (!this.users.find(user => user.getSourceSocketId() === userFromServer.sourceSocketId)) {
-					this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, []));
+					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe((messages: Message[]) => {
+						this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, messages));
+					});
 				}
 			});
 
@@ -37,7 +39,7 @@ export class HomePageComponent implements OnInit {
 		this.socket.on('messageFromClientToMainClient', (message: any) => { // ! TODO: specify message type
 			const target = this.users.find(user => user.getSourceSocketId() === message.sourceSocketId);
 			if (target) {
-				target.pushMessage(new Message(message.body, message.date, false, message.sourceSocketId));
+				target.pushMessage(new Message(message.body, message.date, false, message.sourceSocketId, message.mediaUrl));
 			} else {
 				// ! TODO: error handling
 				throw new Error('something went wrong');
@@ -47,7 +49,7 @@ export class HomePageComponent implements OnInit {
 
 	onAdminSendMessage(mssg: string) {
 		this.messages.push({
-			admin: true,
+			isAdmin: true,
 			body: mssg,
 			date: new Date().toDateString()
 		});
@@ -79,11 +81,6 @@ export class HomePageComponent implements OnInit {
 		this.focusedUser = user;
 		this.focusedUser.setFocused(true);
 		this.messages = this.focusedUser.getMessages();
-		// ! TODO: get messages from an api
-		this.messagesService.getMessagesByUserId(user.getUsername()).subscribe( (messages: Message[]) => {
-			console.log(messages);
-			this.messages = messages;
-		});
 
 	}
 }
