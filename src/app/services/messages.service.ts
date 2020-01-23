@@ -10,37 +10,37 @@ export class MessagesService {
 
 	private messages: Message[] = [
 		{
-			admin: false,
+			isAdmin: false,
 			body: 'sit iste cupiditate commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi.',
 			date: '22/02/2019'
 		},
 		{
-			admin: false,
+			isAdmin: false,
 			body: '. Molestias minima dolore, sit iste cupiditate commodi dicta? Placeat nesciuntnderit necessitatibus omnis expedita aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			admin: false,
+			isAdmin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			admin: true,
+			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			admin: false,
+			isAdmin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			admin: true,
+			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		},
 		{
-			admin: true,
+			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
 			date: '22/02/2019'
 		}
