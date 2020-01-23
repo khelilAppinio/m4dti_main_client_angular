@@ -1,10 +1,13 @@
-<div class="main-container" [ngClass]="{'admin': message.admin}">
+<div class="main-container" [ngClass]="{'admin': message.isAdmin}">
 	<div class="content">
 		<div class="message-body">
 			{{message.body}}
 		</div>
+		<div *ngIf="message.mediaUrl" class="message-media-image">
+			<img [src]="message.mediaUrl" alt="">
+		</div>
 		<div class="message-date">
-			{{message.date}}
+			{{message.date | date:'mediumTime'}}
 		</div>
 	</div>
 </div>

@@ -13,6 +13,11 @@
 				font-size: .8em;
 				color: gray;
 			}
+			.message-media-image {
+				img {
+					max-width: 500px;
+				}
+			}
 		}
 	}
 	.main-container.admin {
