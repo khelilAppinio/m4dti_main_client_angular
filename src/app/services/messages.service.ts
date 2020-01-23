@@ -12,37 +12,37 @@ export class MessagesService {
 		{
 			isAdmin: false,
 			body: 'sit iste cupiditate commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi.',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: false,
 			body: '. Molestias minima dolore, sit iste cupiditate commodi dicta? Placeat nesciuntnderit necessitatibus omnis expedita aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: false,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		},
 		{
 			isAdmin: true,
 			body: 'commodi dicta? Placeat deleniti nesciunt quos nemo velit illum voluptatem excepturi, aperiam?',
-			date: '22/02/2019'
+			date: new Date().getTime()
 		}
 	];
 	constructor(private http: HttpClient) { }

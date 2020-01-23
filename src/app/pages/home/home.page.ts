@@ -51,7 +51,7 @@ export class HomePageComponent implements OnInit {
 		this.messages.push({
 			isAdmin: true,
 			body: mssg,
-			date: new Date().toDateString()
+			date: new Date().getTime()
 		});
 		// TODO: this.scrollMessagesContainerToBottom();
 		// emit message
