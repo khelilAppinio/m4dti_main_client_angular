@@ -13,4 +13,7 @@ export class ChatMessageComponent implements OnInit {
 	ngOnInit() {
 	}
 
+	isImage(url: string) {
+		return !url.includes('uploaded_audios');
+	}
 }

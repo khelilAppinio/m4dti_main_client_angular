@@ -3,9 +3,18 @@
 		<div class="message-body">
 			{{message.body}}
 		</div>
-		<div *ngIf="message.mediaUrl" class="message-media-image">
-			<img [src]="message.mediaUrl" alt="">
-		</div>
+		<ng-container *ngIf="message.mediaUrl">
+			<div *ngIf="isImage(message.mediaUrl)" class="message-media-image">
+				<img [src]="message.mediaUrl" alt="">
+			</div>
+			<div *ngIf="!isImage(message.mediaUrl)" class="message-media-image">
+				<video controls name="media">
+					<source [src]="message.mediaUrl" type="video/3gpp">
+				</video>
+			</div>
+		</ng-container>
+
+
 		<div class="message-date">
 			{{message.date | date:'mediumTime'}}
 		</div>
