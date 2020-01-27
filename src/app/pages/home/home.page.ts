@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UserView } from '../../models/user.model';
+import { UserView, UserStatus } from '../../models/user.model';
 import { Message } from '../../models/message.model';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from '../../services/messages.service';
-
+import { UsersService } from '../../services/users.service';
 @Component({
 	selector: 'm4dti-home',
 	templateUrl: './home.page.html',
@@ -15,7 +15,11 @@ export class HomePageComponent implements OnInit {
 	users: UserView[] = [];
 	messages: Message[] = [];
 	focusedUser: UserView;
-	constructor(private socket: Socket, private messagesService: MessagesService) { }
+	constructor(
+		private socket: Socket,
+		private messagesService: MessagesService,
+		private usersService: UsersService
+	) { }
 
 	ngOnInit(): void {
 		this.socket.emit('messageInitFromMainClient', 'init'); // ! TODO: error handling
@@ -26,7 +30,7 @@ export class HomePageComponent implements OnInit {
 			data.connectedClients.forEach(userFromServer => {
 				if (!this.users.find(user => user.getSourceSocketId() === userFromServer.sourceSocketId)) {
 					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe((messages: Message[]) => {
-						this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, messages));
+						this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, messages, UserStatus.ONLINE, 0));
 					});
 				}
 			});
@@ -45,6 +49,8 @@ export class HomePageComponent implements OnInit {
 				throw new Error('something went wrong');
 			}
 		});
+
+		// this.getOfflineUsers();
 	}
 
 	onAdminSendMessage(mssg: string) {
@@ -82,5 +88,19 @@ export class HomePageComponent implements OnInit {
 		this.focusedUser.setFocused(true);
 		this.messages = this.focusedUser.getMessages();
 
+	}
+
+	getOfflineUsers() {
+		this.usersService.getOfflineUsers().subscribe((users: Array<any>) => {
+			users.forEach(user => {
+				this.users.push(new UserView(user.username, user.socketID, [], UserStatus.OFFLINE, 0));
+			});
+			console.log(this.users);
+		}, err => console.log(err));
+	}
+
+	showUsers() {
+		this.getOfflineUsers();
+		console.log(this.users);
 	}
 }
