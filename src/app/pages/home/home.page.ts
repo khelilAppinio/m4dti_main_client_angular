@@ -26,11 +26,13 @@ export class HomePageComponent implements OnInit {
 		this.socket.on('online_clients', (data: {
 			connectedClients: { username: string, sourceSocketId: string }[]
 		}) => {
-			// ! TODO: should give messages history not always empty array
+			// * give messages history not always empty array
 			data.connectedClients.forEach(userFromServer => {
 				if (!this.users.find(user => user.getSourceSocketId() === userFromServer.sourceSocketId)) {
-					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe((messages: Message[]) => {
-						this.users.push(new UserView(userFromServer.username, userFromServer.sourceSocketId, messages, UserStatus.ONLINE, 0));
+					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe(( result: {messages: Message[], unreadCount: number}) => {
+						this.users.push(
+							new UserView(userFromServer.username, userFromServer.sourceSocketId, result.messages, UserStatus.ONLINE, result.unreadCount)
+						);
 					});
 				}
 			});
@@ -43,7 +45,9 @@ export class HomePageComponent implements OnInit {
 		this.socket.on('messageFromClientToMainClient', (message: any) => { // ! TODO: specify message type
 			const target = this.users.find(user => user.getSourceSocketId() === message.sourceSocketId);
 			if (target) {
-				target.pushMessage(new Message(message.body, message.date, false, message.sourceSocketId, message.mediaUrl));
+				target.pushMessage(new Message(message.body, message.date, false, false, message.sourceSocketId, message.mediaUrl));
+				
+				target.incrementUnreadMessagesCount();
 			} else {
 				// ! TODO: error handling
 				throw new Error('something went wrong');
@@ -57,7 +61,8 @@ export class HomePageComponent implements OnInit {
 		this.messages.push({
 			isAdmin: true,
 			body: mssg,
-			date: new Date().getTime()
+			date: new Date().getTime(),
+			unread: true
 		});
 		// TODO: this.scrollMessagesContainerToBottom();
 		// emit message
@@ -86,7 +91,15 @@ export class HomePageComponent implements OnInit {
 		this.focusedUser && (this.focusedUser.setFocused(false));
 		this.focusedUser = user;
 		this.focusedUser.setFocused(true);
+		this.focusedUser.resetUnreadMessagesCount();
+		// ! TODO: tell the server about read messages
 		this.messages = this.focusedUser.getMessages();
+		this.messagesService.setMessagesAsReadById(this.focusedUser.getUsername()).subscribe(
+			res => {/** set to read success */},
+			err => {
+				// ! TODO: error handling
+			});
+		// ! TODO: should retry if failed
 
 	}
 

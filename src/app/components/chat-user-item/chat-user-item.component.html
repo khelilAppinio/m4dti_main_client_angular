@@ -5,6 +5,7 @@
 	</div>
 	<div class="username">
 		<span>{{user.username}}</span>
+		<span class="unread-count" *ngIf="user.unreadMessagesNumber > 0">{{user.unreadMessagesNumber}}</span>
 	</div>
 	<div class="user-menu">
 	</div>

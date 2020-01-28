@@ -26,10 +26,21 @@
 		}
 		.username {
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
 			align-items: center;
 			justify-content: center;
 			margin-left: 10px;
+			.unread-count {
+				margin-left: 5px;
+				color: white;
+				background-color: red;
+				font-weight: bold;
+				height: 15px;
+				width: 15px;
+				border-radius: 10px;
+				text-align: center;
+				font-size: 0.8em;
+			}
 		}
 	}
 	

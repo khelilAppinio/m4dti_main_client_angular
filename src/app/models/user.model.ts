@@ -1,17 +1,25 @@
 import { Message } from './message.model';
 
 export class User {
-	private id: string;
-	private username: string;
-	private avatar: string;
-	private status: 'offline' | 'online';
-	private sourceSocketId: string;
-
-	constructor(username: string, sourceSocketId: string, focused?: boolean, avatar?: string, status?: UserStatus) {
+	protected id: string;
+	protected username: string;
+	protected avatar: string;
+	protected status: UserStatus;
+	protected sourceSocketId: string;
+	protected unreadMessagesNumber: number;
+	constructor(
+		username: string,
+		sourceSocketId: string,
+		status: UserStatus,
+		unreadMessagesNumber: number,
+		focused?: boolean,
+		avatar?: string
+	) {
 		this.username = username;
 		this.sourceSocketId = sourceSocketId;
 		this.avatar = this.avatar ? this.avatar : 'https://picsum.photos/200/300?random=' + Math.floor(Math.random() * Math.floor(100));
-		this.status = this.status ? this.status : UserStatus.ONLINE;
+		this.status = status;
+		this.unreadMessagesNumber = unreadMessagesNumber;
 	}
 
 	public getSourceSocketId(): string {
@@ -32,8 +40,16 @@ export class UserView extends User {
 	private focused: boolean;
 	private messages: Message[];
 
-	constructor(username: string, sourceSocketId: string, messages: Message[], focused?: boolean, avatar?: string, status?: UserStatus) {
-		super(username, sourceSocketId, focused, avatar, status);
+	constructor(
+		username: string,
+		sourceSocketId: string,
+		messages: Message[],
+		status: UserStatus,
+		unreadMessagesNumber: number,
+		focused?: boolean,
+		avatar?: string
+	) {
+		super(username, sourceSocketId, status, unreadMessagesNumber, focused, avatar);
 		this.focused = this.focused ? this.focused : false;
 		this.messages = messages;
 	}
@@ -53,9 +69,18 @@ export class UserView extends User {
 	public isFocused(): boolean {
 		return this.focused;
 	}
+
+	public incrementUnreadMessagesCount() {
+		this.unreadMessagesNumber ++;
+	}
+
+	public resetUnreadMessagesCount() {
+		this.messages.forEach( mssg => mssg.unread = false);
+		this.unreadMessagesNumber = 0;
+	}
 }
 
-enum UserStatus {
+export enum UserStatus {
 	OFFLINE = 'offline',
 	ONLINE = 'online'
 }
