@@ -29,7 +29,7 @@ export class HomePageComponent implements OnInit {
 			// * give messages history not always empty array
 			data.connectedClients.forEach(userFromServer => {
 				if (!this.users.find(user => user.getSourceSocketId() === userFromServer.sourceSocketId)) {
-					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe(( result: {messages: Message[], unreadCount: number}) => {
+					this.messagesService.getMessagesByUserId(userFromServer.username).subscribe((result: { messages: Message[], unreadCount: number }) => {
 						this.users.push(
 							new UserView(userFromServer.username, userFromServer.sourceSocketId, result.messages, UserStatus.ONLINE, result.unreadCount)
 						);
@@ -46,7 +46,6 @@ export class HomePageComponent implements OnInit {
 			const target = this.users.find(user => user.getSourceSocketId() === message.sourceSocketId);
 			if (target) {
 				target.pushMessage(new Message(message.body, message.date, false, false, message.sourceSocketId, message.mediaUrl));
-				
 				target.incrementUnreadMessagesCount();
 			} else {
 				// ! TODO: error handling
@@ -95,7 +94,7 @@ export class HomePageComponent implements OnInit {
 		// ! TODO: tell the server about read messages
 		this.messages = this.focusedUser.getMessages();
 		this.messagesService.setMessagesAsReadById(this.focusedUser.getUsername()).subscribe(
-			res => {/** set to read success */},
+			res => {/** set to read success */ },
 			err => {
 				// ! TODO: error handling
 			});
