@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { HttpClientModule } from '@angular/common/http';
+import { ImageDialogComponent } from './components/image-dialog/image-dialog.component';
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 
 @NgModule({

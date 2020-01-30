@@ -9,12 +9,14 @@ import {
 	MatListModule,
 	MatFormFieldModule,
 	MatInputModule,
-	MatButtonModule
+	MatButtonModule,
+	MatDialogModule
 } from '@angular/material';
 import { ChatUserItemComponent } from '../../components/chat-user-item/chat-user-item.component';
-import { ChatMessageComponent } from 'src/app/components/chat-message/chat-message.component';
-import { ChatSendFieldComponent } from 'src/app/components/chat-send-field/chat-send-field.component';
+import { ChatMessageComponent } from '../../components/chat-message/chat-message.component';
+import { ChatSendFieldComponent } from '../../components/chat-send-field/chat-send-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageDialogComponent } from '../../components/image-dialog/image-dialog.component';
 
 const routes: Routes = [
 	{
@@ -24,7 +26,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	declarations: [HomePageComponent, ChatUserItemComponent, ChatMessageComponent, ChatSendFieldComponent],
+	entryComponents: [ImageDialogComponent],
+	declarations: [
+		HomePageComponent,
+		ChatUserItemComponent,
+		ChatMessageComponent,
+		ChatSendFieldComponent,
+		ImageDialogComponent,
+
+		],
 	imports: [
 		CommonModule,
 		RouterModule.forChild(routes),
@@ -38,7 +48,8 @@ const routes: Routes = [
 		MatListModule,
 		MatFormFieldModule,
 		MatInputModule,
-		MatButtonModule
+		MatButtonModule,
+		MatDialogModule,
 	]
 })
 export class HomeModule { }

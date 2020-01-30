@@ -1,0 +1,12 @@
+.main-container {
+	position: relative;
+	mat-icon {
+		position: absolute;
+		right: -24px;
+    top: -24px;
+		cursor: pointer;
+	}
+	img {
+		width: 100%;
+	}
+}

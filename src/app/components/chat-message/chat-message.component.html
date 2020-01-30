@@ -4,8 +4,8 @@
 			{{message.body}}
 		</div>
 		<ng-container *ngIf="message.mediaUrl">
-			<div *ngIf="isImage(message.mediaUrl)" class="message-media-image">
-				<img [src]="message.mediaUrl" alt="">
+			<div *ngIf="isImage(message.mediaUrl)" (click)="openDialog()" class="message-media-image">
+				<img [src]="message.mediaUrl" alt="image not found">
 			</div>
 			<div *ngIf="!isImage(message.mediaUrl)" class="message-media-image">
 				<video controls name="media">
