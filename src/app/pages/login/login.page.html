@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!isLoading">
 	<mat-card-title>
 		<span>Login</span>
 		<mat-slide-toggle color="primary" (click)="langToggle()">{{lang}}</mat-slide-toggle>
@@ -27,3 +27,6 @@
 		</form>
 	</mat-card-content>
 </mat-card>
+<div *ngIf="isLoading">
+	Please wait...
+</div>
