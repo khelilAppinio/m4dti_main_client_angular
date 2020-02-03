@@ -4,6 +4,8 @@ import { Message } from '../../models/message.model';
 import { Socket } from 'ngx-socket-io';
 import { MessagesService } from '../../services/messages.service';
 import { UsersService } from '../../services/users.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'm4dti-home',
 	templateUrl: './home.page.html',
@@ -16,12 +18,31 @@ export class HomePageComponent implements OnInit {
 	messages: Message[] = [];
 	focusedUser: UserView;
 	constructor(
+		private router: Router,
 		private socket: Socket,
 		private messagesService: MessagesService,
-		private usersService: UsersService
+		private usersService: UsersService,
+		private authService: AuthService
 	) { }
 
 	ngOnInit(): void {
+		const accessToken = localStorage.getItem('accessToken');
+		this.authService.isLoggedIn(accessToken).subscribe(
+			(isLoggedIn: boolean) => {
+				if (isLoggedIn) {
+					this.initConnection();
+				} else {
+					this.router.navigate(['']).then( res => console.log(res)).catch( err => console.log(err));
+				}
+			},
+			(err) => {
+					this.router.navigate(['']).then( res => console.log(res)).catch( err => console.log(err));
+
+			}
+		)
+	}
+
+	initConnection() {
 		this.socket.emit('messageInitFromMainClient', 'init'); // ! TODO: error handling
 		this.socket.on('online_clients', (data: {
 			connectedClients: { username: string, sourceSocketId: string }[]
