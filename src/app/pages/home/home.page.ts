@@ -32,11 +32,11 @@ export class HomePageComponent implements OnInit {
 				if (isLoggedIn) {
 					this.initConnection();
 				} else {
-					this.router.navigate(['']).then( res => console.log(res)).catch( err => console.log(err));
+					this.router.navigate(['']).catch( err => console.log(err));
 				}
 			},
 			(err) => {
-					this.router.navigate(['']).then( res => console.log(res)).catch( err => console.log(err));
+					this.router.navigate(['']).catch( perr => console.log(perr));
 
 			}
 		)
@@ -135,5 +135,10 @@ export class HomePageComponent implements OnInit {
 	showUsers() {
 		this.getOfflineUsers();
 		console.log(this.users);
+	}
+
+	onLogout(){
+		localStorage.removeItem('accessToken');
+		this.router.navigate(['']).catch( err => console.log(err));
 	}
 }

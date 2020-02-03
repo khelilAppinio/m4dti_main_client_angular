@@ -1,7 +1,14 @@
 
 :host {
-	h1.app-name {
-		margin-left: 8px;
+	mat-toolbar {
+		display: flex;
+		h1.app-name {
+			margin-left: 8px;
+			flex: 1;
+		}
+		.logout {
+			cursor: pointer;
+		}
 	}
 	.main-container {
 		display: flex;

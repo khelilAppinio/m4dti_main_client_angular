@@ -1,6 +1,7 @@
 <mat-toolbar color="primary" (click)="showUsers()">
 	<!-- <button mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button> -->
 	<h1 class="app-name">Admin chat App</h1>
+	<span class="logout" (click)="onLogout()">logout</span>
 </mat-toolbar>
 <ng-container *ngIf="users.length !== 0">
 	<div class="main-container">

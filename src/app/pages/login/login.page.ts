@@ -17,6 +17,7 @@ export class LoginPage implements OnInit {
 	});
 	lang = 'en';
 	isLoading = true;
+	loginError: { message: string };
 
 	constructor(private router: Router, private readonly authService: AuthService) { }
 
@@ -25,7 +26,7 @@ export class LoginPage implements OnInit {
 		if (accessTocken) {
 			this.authService.isLoggedIn(accessTocken).subscribe((isLoggedIn: boolean) => {
 				if (isLoggedIn)
-					this.router.navigate(['home']).then(res => console.log(res)).catch(err => console.log(err));
+					this.router.navigate(['home']).catch(err => console.log(err));
 				else
 					this.isLoading = false;
 			})
@@ -47,15 +48,19 @@ export class LoginPage implements OnInit {
 	login() {
 		const { username, password } = this.form.value;
 		this.authService.login(username, password).subscribe(
-			(response: {accessToken: string}) => {
+			(response: { accessToken: string }) => {
 				localStorage.setItem('accessToken', response.accessToken);
 				// ! TODO: pass token to home
-				this.router.navigate(['home']).then( res => console.log(res)).catch( err => console.log(err));
+				this.router.navigate(['home']).catch(err => console.log(err));
 			},
 			(err) => {
-				// ! TODO: alert failed to login wrong credentials
-				console.warn(err, 'authentication failed');
+				// alert failed to login wrong credentials
+				this.loginError = { message: '*authentication failed' };
 			}
 		)
+	}
+
+	onInputChange() {
+		this.loginError = undefined;
 	}
 }
