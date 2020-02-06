@@ -73,17 +73,20 @@ export class HomePageComponent implements OnInit {
 				throw new Error('something went wrong');
 			}
 		});
+		this.socket.on('messageFromMainClientToClient', (message: {targetSocketID: string, body: string, date: number}) => {
+			console.log(message);
+			const newMessageFromAdminTarget = this.users.find( (user: UserView) => user.getSourceSocketId() === message.targetSocketID);
+			if (newMessageFromAdminTarget) {
+				newMessageFromAdminTarget.pushMessage(new Message(message.body, message.date, true, false));
+			}
+		})
 
 		// this.getOfflineUsers();
 	}
 
 	onAdminSendMessage(mssg: string) {
-		this.messages.push({
-			isAdmin: true,
-			body: mssg,
-			date: new Date().getTime(),
-			unread: true
-		});
+		console.log(this.users);
+
 		// TODO: this.scrollMessagesContainerToBottom();
 		// emit message
 		this.socket.emit('messageFromMainClientToServer', {
