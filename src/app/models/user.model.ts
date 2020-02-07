@@ -1,12 +1,12 @@
 import { Message } from './message.model';
 
 export class User {
-	protected id: string;
-	protected username: string;
-	protected avatar: string;
-	protected status: UserStatus;
-	protected sourceSocketId: string;
-	protected unreadMessagesNumber: number;
+	public id: string;
+	public username: string;
+	public avatar: string;
+	public status: UserStatus;
+	public sourceSocketId: string;
+	public unreadMessagesNumber: number;
 	constructor(
 		username: string,
 		sourceSocketId: string,
@@ -37,8 +37,8 @@ export class User {
 
 export class UserView extends User {
 
-	private focused: boolean;
-	private messages: Message[];
+	public focused: boolean;
+	public messages: Message[];
 
 	constructor(
 		username: string,

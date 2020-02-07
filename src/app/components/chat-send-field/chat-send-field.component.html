@@ -2,5 +2,8 @@
 	<mat-form-field>
 		<input matInput placeholder="Send message" name="toSendMessage" autocomplete="off" [(ngModel)]="toSendMessage">
 	</mat-form-field>
-	<button mat-button (click)="sendingMessage()" color="primary">Send</button>
+	<button mat-button (click)="sendingMessage()" color="primary">
+		<mat-icon aria-hidden="false" aria-label="send icon">send</mat-icon>
+	</button>
+
 </form>

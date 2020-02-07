@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { User } from '../../models/user.model';
+import { User, UserView } from '../../models/user.model';
 
 @Component({
 	selector: 'm4dti-chat-user-item',
@@ -8,7 +8,7 @@ import { User } from '../../models/user.model';
 })
 export class ChatUserItemComponent implements OnInit {
 
-	@Input('user') user: User;
+	@Input('user') user: UserView;
 	constructor() { }
 
 	ngOnInit() {
